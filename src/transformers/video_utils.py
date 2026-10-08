@@ -283,19 +283,13 @@ def get_video_size(video: np.ndarray, channel_dim: ChannelDimension | None = Non
 
 
 def get_uniform_frame_indices(total_num_frames: int, num_frames: int | None = None):
-    """
-    Creates a numpy array for uniform sampling of `num_frame` frames from `total_num_frames`
-    when loading a video.
-
-    Args:
-        total_num_frames (`int`):
-            Total number of frames that a video has.
-        num_frames (`int`, *optional*):
-            Number of frames to sample uniformly. If not specified, all frames are sampled.
-
-    Returns:
-        np.ndarray: np array of frame indices that will be sampled.
-    """
+    """Deprecated. Use [`default_sample_indices_fn`] instead."""
+    warnings.warn(
+        "`get_uniform_frame_indices` is deprecated and will be removed in a future version. "
+        "Use `default_sample_indices_fn` instead.",
+        FutureWarning,
+        stacklevel=2,
+    )
     if num_frames is not None:
         indices = np.arange(0, total_num_frames, total_num_frames / num_frames).astype(int)
     else:
