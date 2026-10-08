@@ -32,6 +32,7 @@ from transformers.testing_utils import (
     require_vision,
 )
 from transformers.video_utils import (
+    get_uniform_frame_indices,
     group_videos_by_shape,
     is_torchvision_video_decoding_available,
     make_batched_videos,
@@ -56,6 +57,14 @@ def get_random_video(height, width, num_frames=8, return_torch=False):
         # move channel first
         return torch.from_numpy(video).permute(0, 3, 1, 2)
     return video
+
+
+class VideoUtilsTester(unittest.TestCase):
+    def test_get_uniform_frame_indices_deprecation(self):
+        with self.assertWarnsRegex(FutureWarning, "get_uniform_frame_indices.*deprecated"):
+            indices = get_uniform_frame_indices(total_num_frames=4, num_frames=2)
+
+        np.testing.assert_array_equal(indices, np.array([0, 2]))
 
 
 @require_vision
